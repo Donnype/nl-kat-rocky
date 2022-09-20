@@ -16,7 +16,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMi
 User = get_user_model()
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OrganizationMemberAddView(
     UserPassesTestMixin,
     PermissionRequiredMixin,

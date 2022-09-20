@@ -20,7 +20,7 @@ def get_organization(request: HttpRequest):
     return get_object_or_404(Organization, pk=request.GET.get("organization_id"))
 
 
-@otp_required
+@otp_required(if_configured=True)
 @user_passes_test(can_switch_organization)
 def switch_client(request: HttpRequest):
     organization = get_organization(request)

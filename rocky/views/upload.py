@@ -83,7 +83,7 @@ def proccess_csv(request, io_string, context):
 
 
 @user_passes_test(is_red_team)
-@otp_required
+@otp_required(if_configured=True)
 @require_http_methods(["GET", "POST"])
 def upload(request):
 

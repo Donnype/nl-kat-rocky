@@ -4,7 +4,7 @@ from django_otp.decorators import otp_required
 from two_factor.views.utils import class_view_decorator
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class AccountView(DetailView):
     template_name = "account_detail.html"
 

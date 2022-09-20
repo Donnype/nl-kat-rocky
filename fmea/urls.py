@@ -58,11 +58,11 @@ urlpatterns = [
         views.FailureModeReportView.as_view(),
         name="fmea_failure_mode_report",
     ),
-    path(
-        "failure-modes/<pk>/report/pdf/",
-        views.GenerateFailureModePDF.as_view(),
-        name="fmea_failure_mode_report_pdf",
-    ),
+    # path(
+    #     "failure-modes/<pk>/report/pdf/",
+    #     views.GenerateFailureModePDF.as_view(),
+    #     name="fmea_failure_mode_report_pdf",
+    # ),
     path(
         "failure-modes/<pk>/update/",
         views.FailureModeUpdateView.as_view(),

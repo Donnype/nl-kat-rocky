@@ -24,7 +24,7 @@ class crisisBreadcrumbsMixin(BreadcrumbsMixin):
     ]
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class CrisisRoomView(
     crisisBreadcrumbsMixin, MultipleOOIMixin, ConnectorFormMixin, TemplateView
 ):

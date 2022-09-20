@@ -10,7 +10,7 @@ from rocky.settings import MIAUW_API_ENABLED
 from tools.miauw_helpers import get_signal_linking_qr
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class SignalQRView(TemplateView):
     template_name = "signal_qr.html"
 

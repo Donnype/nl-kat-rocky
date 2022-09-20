@@ -24,7 +24,7 @@ def ooi_type_input_choices():
     return [{"value": ooi_type, "text": ooi_type} for ooi_type in ooi_types]
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OOIAddTypeSelectView(TemplateView):
     template_name = "oois/ooi_add_type_select.html"
 
@@ -50,7 +50,7 @@ class OOIAddTypeSelectView(TemplateView):
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OOIAddView(BaseOOIFormView):
     template_name = "oois/ooi_add.html"
 

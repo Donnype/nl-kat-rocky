@@ -11,7 +11,7 @@ from django.views.generic import TemplateView
 scheduler_client = SchedulerClient(SCHEDULER_API)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class TaskListView(TemplateView):
     template_name = "tasks/list.html"
 

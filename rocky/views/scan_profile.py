@@ -18,7 +18,7 @@ from tools.view_helpers import (
 )
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class ScanProfileDetailView(OOIDetailView, FormView):
     template_name = "scan_profiles/scan_profile_detail.html"
     form_class = SetClearanceLevelForm

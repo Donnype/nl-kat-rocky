@@ -16,7 +16,7 @@ from fmea.views.view_helpers import FailureModeEffectBreadcrumbsMixin
 from tools.view_helpers import Breadcrumb
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeEffectCreateView(FailureModeEffectBreadcrumbsMixin, CreateView):
     """
     View to create a failure mode effect.
@@ -51,7 +51,7 @@ class FailureModeEffectCreateView(FailureModeEffectBreadcrumbsMixin, CreateView)
         return breadcrumbs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeEffectUpdateView(FailureModeEffectBreadcrumbsMixin, UpdateView):
     """
     View for updating a failure mode effect.
@@ -95,7 +95,7 @@ class FailureModeEffectUpdateView(FailureModeEffectBreadcrumbsMixin, UpdateView)
         return breadcrumbs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeEffectDetailView(FailureModeEffectBreadcrumbsMixin, DetailView):
     """
     View for 1 failure mode effect. id in kwargs.
@@ -119,7 +119,7 @@ class FailureModeEffectDetailView(FailureModeEffectBreadcrumbsMixin, DetailView)
         return breadcrumbs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeEffectListView(FailureModeEffectBreadcrumbsMixin, ListView):
     """
     View of all failure modes effects.

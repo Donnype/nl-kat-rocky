@@ -18,7 +18,7 @@ from fmea.views.view_helpers import FMEABreadcrumbsMixin
 from tools.view_helpers import Breadcrumb
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeReportView(FMEABreadcrumbsMixin, DetailView):
     """
     View for a report based on a failure mode
@@ -58,15 +58,15 @@ class FailureModeReportView(FMEABreadcrumbsMixin, DetailView):
         return context
 
 
-@class_view_decorator(otp_required)
-class GenerateFailureModePDF(View):
-    def get(self, request, *args, **kwargs):
-        template = "fmea/fmea_failure_mode_report.html"
-        pdf = html_to_pdf(template)
-        return HttpResponse(pdf, content_type="application/pdf")
+# @class_view_decorator(otp_required(if_configured=True))
+# class GenerateFailureModePDF(View):
+#     def get(self, request, *args, **kwargs):
+#         template = "fmea/fmea_failure_mode_report.html"
+#         pdf = html_to_pdf(template)
+#         return HttpResponse(pdf, content_type="application/pdf")
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FMEADepartmentHeatmapView(FMEABreadcrumbsMixin, TemplateView):
     template_name = "fmea/fmea_department_heatmap.html"
 

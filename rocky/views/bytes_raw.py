@@ -15,7 +15,7 @@ from rocky.bytes_client import get_bytes_client
 logger = logging.getLogger(__name__)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BytesRawView(View):
     def get(self, request, boefje_meta_id: str):
         try:

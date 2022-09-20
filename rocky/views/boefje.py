@@ -154,7 +154,7 @@ class BoefjeMixin(OctopoesMixin):
         return
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BoefjeDetailView(
     KATalogusBreadcrumbsMixin, BoefjeMixin, PageActionMixin, TemplateView
 ):
@@ -247,7 +247,7 @@ class BoefjeDetailView(
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BoefjeCoverView(View):
     def get(self, request, boefje_id: str):
         return FileResponse(
@@ -255,7 +255,7 @@ class BoefjeCoverView(View):
         )
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BoefjeConsumableObjectType(TemplateView):
     template_name = "oois/ooi_add_type_select.html"
     boefje: Boefje = None
@@ -302,7 +302,7 @@ class BoefjeConsumableObjectType(TemplateView):
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BoefjeConsumableObjectAddView(BaseOOIFormView):
     template_name = "oois/ooi_add.html"
     boefje: Boefje = None

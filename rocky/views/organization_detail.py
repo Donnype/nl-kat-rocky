@@ -52,7 +52,7 @@ def get_allowed_actions(organization) -> Dict[str, bool]:
     }
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OrganizationDetailView(
     PermissionRequiredMixin,
     OrganizationBreadcrumbsMixin,

@@ -11,7 +11,7 @@ from onboarding.forms import OnboardingCreateOrganizationForm
 from tools.models import Organization
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OrganizationAddView(PermissionRequiredMixin, CreateView):
     """
     View to create a new organization

@@ -14,7 +14,7 @@ from tools.forms import FindingTypeAddForm
 from tools.view_helpers import get_ooi_url
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FindingTypeAddView(OctopoesMixin, FormView):
     template_name = "finding_type_add.html"
     form_class = FindingTypeAddForm

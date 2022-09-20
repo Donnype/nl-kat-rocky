@@ -51,10 +51,7 @@ class LoginRockyView(LoginView):
         return context
 
     def get_success_url(self):
-        url = self.get_redirect_url()
-        if default_device(self.request.user) is None:
-            url = resolve_url("setup")
-        return url or resolve_url(LOGIN_REDIRECT_URL)
+        return reverse("landing_page")
 
 
 @class_view_decorator(sensitive_post_parameters())

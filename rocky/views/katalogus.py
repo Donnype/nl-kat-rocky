@@ -29,7 +29,7 @@ class KATalogusBreadcrumbsMixin(BreadcrumbsMixin):
     breadcrumbs = [{"text": "KAT-alogus", "url": reverse_lazy("katalogus")}]
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class KATalogusListView(
     PageActionMixin, KATalogusBreadcrumbsMixin, BoefjeMixin, TemplateView
 ):

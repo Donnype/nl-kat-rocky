@@ -17,7 +17,7 @@ from fmea.models import FailureMode
 from fmea.views.view_helpers import FailureModeBreadcrumbsMixin
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeCreateView(FailureModeBreadcrumbsMixin, CreateView):
     """
     Create a new failure mode with the failure mode form of FMEA.
@@ -55,7 +55,7 @@ class FailureModeCreateView(FailureModeBreadcrumbsMixin, CreateView):
         return breadcrumbs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeListView(FailureModeBreadcrumbsMixin, ListView):
     """
     View of all failure modes.
@@ -66,7 +66,7 @@ class FailureModeListView(FailureModeBreadcrumbsMixin, ListView):
     paginate_by = 10
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeUpdateView(FailureModeBreadcrumbsMixin, UpdateView):
     model = FailureMode
     form_class = FailureModeForm
@@ -105,7 +105,7 @@ class FailureModeUpdateView(FailureModeBreadcrumbsMixin, UpdateView):
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeDetailView(FailureModeBreadcrumbsMixin, DetailView):
     """
     View for 1 failure mode. Get failure mode with ID # in URL

@@ -11,7 +11,7 @@ from tools.view_helpers import Breadcrumb, ObjectsBreadcrumbsMixin
 logger = getLogger(__name__)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class ScanListView(ObjectsBreadcrumbsMixin, TemplateView):
     template_name = "scan.html"
 

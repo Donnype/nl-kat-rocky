@@ -101,7 +101,7 @@ class OOIFindingManager(SingleOOITreeMixin):
         return finding_details
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OOIRelatedObjectAddView(OOIRelatedObjectManager, OOIFindingManager, TemplateView):
     template_name = "oois/ooi_detail_add_related_object.html"
 

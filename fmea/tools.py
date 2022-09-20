@@ -1,8 +1,9 @@
-from io import BytesIO
+# from io import BytesIO
+# from django.http import HttpResponse
+# from django.template.loader import get_template
+# from xhtml2pdf import pisa
+
 from enum import Enum
-from django.http import HttpResponse
-from django.template.loader import get_template
-from xhtml2pdf import pisa
 from django.utils.translation import gettext_lazy as _
 from tools.ooi_helpers import OOI_TYPES_WITHOUT_FINDINGS
 
@@ -21,15 +22,15 @@ def transform_ooi_types_to_choices():
 OOI_TYPES = transform_ooi_types_to_choices()
 
 
-def html_to_pdf(template_src, context_dict={}):
-    encoder_type = "ISO-8859-1"
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode(encoder_type)), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type="application/pdf")
-    return None
+# def html_to_pdf(template_src, context_dict={}):
+#     encoder_type = "ISO-8859-1"
+#     template = get_template(template_src)
+#     html = template.render(context_dict)
+#     result = BytesIO()
+#     pdf = pisa.pisaDocument(BytesIO(html.encode(encoder_type)), result)
+#     if not pdf.err:
+#         return HttpResponse(result.getvalue(), content_type="application/pdf")
+#     return None
 
 
 class RiskClass(Enum):

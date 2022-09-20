@@ -6,7 +6,7 @@ from tools.models import Organization
 from tools.view_helpers import OrganizationBreadcrumbsMixin
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OrganizationListView(
     PermissionRequiredMixin,
     OrganizationBreadcrumbsMixin,

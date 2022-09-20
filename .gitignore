@@ -458,3 +458,4 @@ assets/bytes/
 !packaging/deb/data/usr/lib
 # robot framework
 tests/robot_framework/results
+**.db

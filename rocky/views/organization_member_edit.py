@@ -12,7 +12,7 @@ from account.forms import OrganizationMemberForm
 from tools.models import OrganizationMember
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OrganizationMemberEditView(PermissionRequiredMixin, UpdateView):
     form_class = OrganizationMemberForm
     model = OrganizationMember

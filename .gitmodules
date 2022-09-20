@@ -1,0 +1,12 @@
+[submodule "bytes"]
+	path = bytes
+	url = git@github.com:Donnype/nl-kat-bytes.git
+[submodule "boefjes"]
+	path = boefjes
+	url = git@github.com:Donnype/nl-kat-boefjes.git
+[submodule "octopoes"]
+	path = octopoes
+	url = git@github.com:Donnype/nl-kat-octopoes.git
+[submodule "mula"]
+	path = mula
+	url = git@github.com:Donnype/nl-kat-mula.git

@@ -2,11 +2,12 @@ from typing import Dict
 
 import requests
 
+from boefjes.bytes_client import BytesAPIClient as BytesClient
 from rocky.health import ServiceHealth
 from rocky.settings import BYTES_API, BYTES_USERNAME, BYTES_PASSWORD
 
 
-class BytesClient:
+class BytesClientV1:
     def __init__(self, base_url: str, username: str, password: str):
         self.base_url = base_url
         self.credentials = {

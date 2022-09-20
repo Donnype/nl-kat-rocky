@@ -20,7 +20,7 @@ from fmea.models import FailureModeAffectedObject, FailureModeTreeObject
 from fmea.views.view_helpers import AffectedObjectBreadcrumbsMixin
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeAffectedObjectCreateView(AffectedObjectBreadcrumbsMixin, CreateView):
     """
     View of failure modes with the affected departments.
@@ -60,7 +60,7 @@ class FailureModeAffectedObjectCreateView(AffectedObjectBreadcrumbsMixin, Create
         return breadcrumbs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeAffectedObjectUpdateView(AffectedObjectBreadcrumbsMixin, UpdateView):
     model = FailureModeAffectedObject
     form_class = FailureModeAffectedObjectForm
@@ -104,7 +104,7 @@ class FailureModeAffectedObjectUpdateView(AffectedObjectBreadcrumbsMixin, Update
         return breadcrumbs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeAffectedObjectListView(AffectedObjectBreadcrumbsMixin, ListView):
     """
     View of all failure modes affected objects.
@@ -115,7 +115,7 @@ class FailureModeAffectedObjectListView(AffectedObjectBreadcrumbsMixin, ListView
     paginate_by = 10
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FailureModeAffectedObjectDetailView(AffectedObjectBreadcrumbsMixin, DetailView):
     """
     View for 1 failure mode affected objects.
@@ -125,7 +125,7 @@ class FailureModeAffectedObjectDetailView(AffectedObjectBreadcrumbsMixin, Detail
     model = FailureModeAffectedObject
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class FMEATreeObjectView(View):
     """
     Add tree nodes to affected departments

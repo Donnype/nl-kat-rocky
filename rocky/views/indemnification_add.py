@@ -6,7 +6,7 @@ from account.forms import IndemnificationAddForm
 from tools.models import OrganizationMember, Indemnification
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class IndemnificationAddView(FormView):
     template_name = "indemnification_add.html"
     form_class = IndemnificationAddForm

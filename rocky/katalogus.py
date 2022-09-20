@@ -8,6 +8,8 @@ from octopoes.models import OOI
 from octopoes.models.types import type_by_name
 from pydantic import BaseModel
 
+from katalogus.dependencies.plugins import get_plugin_service
+
 from rocky.health import ServiceHealth
 from rocky.settings import KATALOGUS_API
 from tools.models import SCAN_LEVEL, Organization
@@ -56,6 +58,53 @@ class KATalogusClientInterface:
 
 
 class KATalogusClientV1(KATalogusClientInterface):
+    def __init__(self, organization: str, *args, **kwargs):
+        self.organization = organization
+
+    def health(self) -> ServiceHealth:
+        return ServiceHealth(service="katalogus", healthy=True)
+
+    def get_boefjes(self) -> List[Boefje]:
+        all_plugins = next(get_plugin_service(self.organization)).get_all(self.organization)
+
+        return [
+            _parse_boefje_v1(plugin.dict())
+            for plugin in all_plugins
+            if plugin.type == "boefje"
+        ]
+
+    def get_boefje(self, boefje_id: str) -> Boefje:
+        plugin = next(get_plugin_service(self.organization)).by_plugin_id(boefje_id, self.organization)
+
+        return _parse_boefje_v1(plugin.dict())
+
+    def enable_boefje(self, boefje_id: str) -> None:
+        self._patch_boefje_state(boefje_id, True)
+
+    def disable_boefje(self, boefje_id: str) -> None:
+        self._patch_boefje_state(boefje_id, False)
+
+    def get_enabled_boefjes(self) -> List[Boefje]:
+        return [boefje for boefje in self.get_boefjes() if boefje.enabled]
+
+    def _patch_boefje_state(self, boefje_id: str, enabled: bool) -> None:
+        plugin_service = next(get_plugin_service(self.organization))
+        plugin = plugin_service.by_plugin_id(boefje_id, self.organization)
+
+        with plugin_service as p:
+            p.update_by_id(plugin.repository_id, boefje_id, self.organization, enabled)
+
+    def get_description(self, boefje_id: str) -> str:
+        return next(get_plugin_service(self.organization)).description(boefje_id, self.organization)
+
+    def get_cover(self, boefje_id: str) -> BytesIO:
+        path = next(get_plugin_service(self.organization)).cover(boefje_id)
+
+        with path.open(mode="rb") as f:
+            return BytesIO(f.read())
+
+
+class KATalogusClientV2(KATalogusClientInterface):
     def __init__(self, base_uri: str, organization: str):
         self.base_uri = base_uri
         self.organization_uri = f"{base_uri}/v1/organisations/{organization}"
@@ -143,7 +192,7 @@ def _parse_boefje_v1(boefje: Dict) -> Boefje:
 
 
 def get_katalogus(organization: str) -> KATalogusClientInterface:
-    return KATalogusClientV1(KATALOGUS_API, organization)
+    return KATalogusClientV1(base_uri=KATALOGUS_API, organization=organization)
 
 
 def get_enabled_boefjes_for_ooi_class(

@@ -76,10 +76,6 @@ class OctopoesMixin:
     api_connector: OctopoesAPIConnector = None
 
     def get_api_connector(self) -> OctopoesAPIConnector:
-        # needs obvious check, because of execution order
-        if not self.request.user.is_verified():
-            return None
-
         if not self.request.active_organization:
             raise OctopoesAPIImproperlyConfigured("Organization missing")
 
@@ -332,7 +328,7 @@ class MultipleOOIMixin(OctopoesMixin):
         return ", ".join(self.filtered_ooi_types)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, TemplateView):
     connector_form_class = ObservedAtForm
 
@@ -362,7 +358,7 @@ class BaseOOIListView(MultipleOOIMixin, ConnectorFormMixin, TemplateView):
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, TemplateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -382,7 +378,7 @@ class BaseOOIDetailView(SingleOOITreeMixin, ConnectorFormMixin, TemplateView):
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BaseOOIFormView(SingleOOIMixin, FormView):
     ooi_class: Type[OOI] = None
     form_class = OOIForm
@@ -449,7 +445,7 @@ class BaseOOIFormView(SingleOOIMixin, FormView):
         return self.ooi._natural_key_attrs
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class BaseDeleteOOIView(SingleOOIMixin, TemplateView):
     success_url = None
 

@@ -32,6 +32,7 @@ class Command(BaseCommand):
             organization=dev_org,
             verified=True,
             authorized=True,
+            onboarded=True,
             status=OrganizationMember.STATUSES.ACTIVE,
         )
 

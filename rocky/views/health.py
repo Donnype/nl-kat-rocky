@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 @user_passes_test(is_red_team)
-@otp_required
+@otp_required(if_configured=True)
 def health(request: HttpRequest) -> HttpResponse:
 
     services = [

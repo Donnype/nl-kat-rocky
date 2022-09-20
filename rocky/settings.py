@@ -13,19 +13,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Load variables from the .env file
-load_dotenv(dotenv_path=BASE_DIR / ".env", verbose=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "TMP")
 
 QUEUE_NAME_BOEFJES = os.getenv("QUEUE_NAME_BOEFJES")
 QUEUE_NAME_NORMALIZERS = os.getenv("QUEUE_NAME_NORMALIZERS")
@@ -48,8 +43,8 @@ BYTES_USERNAME = os.getenv("BYTES_USERNAME", "")
 BYTES_PASSWORD = os.getenv("BYTES_PASSWORD", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
-TWOFACTOR_ENABLED = os.getenv("TWOFACTOR_ENABLED") == "True"
+DEBUG = os.getenv("DEBUG", "True") == "True"
+TWOFACTOR_ENABLED = os.getenv("TWOFACTOR_ENABLED", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -145,33 +140,12 @@ WSGI_APPLICATION = "rocky.wsgi.application"
 
 AUTH_USER_MODEL = "account.KATUser"
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-POSTGRES_USER = os.getenv("ROCKY_DB_USER")
-POSTGRES_PASSWORD = os.getenv("ROCKY_DB_PASSWORD")
-POSTGRES_DB = os.getenv("ROCKY_DB")
-POSTGRES_DB_HOST = os.getenv("ROCKY_DB_HOST")
-POSTGRES_DB_PORT = os.getenv("ROCKY_DB_PORT")
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": POSTGRES_DB,
-        "USER": POSTGRES_USER,
-        "PASSWORD": POSTGRES_PASSWORD,
-        "HOST": POSTGRES_DB_HOST,
-        "PORT": POSTGRES_DB_PORT,
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'rocky.db'),
     }
 }
-
-if os.getenv("POSTGRES_SSL_ENABLED"):
-    DATABASES["default"]["OPTIONS"] = {
-        "sslmode": os.getenv("POSTGRES_SSL_MODE"),
-        "sslrootcert": os.getenv("POSTGRES_SSL_ROOTCERT"),
-        "sslcert": os.getenv("POSTGRES_SSL_CERT"),
-        "sslkey": os.getenv("POSTGRES_SSL_KEY"),
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

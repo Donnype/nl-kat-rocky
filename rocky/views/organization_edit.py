@@ -15,7 +15,7 @@ from tools.miauw_helpers import get_registered_usernames
 from tools.models import Organization
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OrganizationEditView(PermissionRequiredMixin, UpdateView):
     form_class = OrganizationForm
     model = Organization

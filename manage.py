@@ -2,9 +2,19 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from pathlib import Path
+
+
+path = Path(__file__)
+sys.path.append(str(path.parent))
+sys.path.append(str(path.parent / "octopoes"))
+sys.path.append(str(path.parent / "mula"))
+sys.path.append(str(path.parent / "boefjes"))
 
 
 def main():
+    os.chdir(path.parent)
+
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rocky.settings")
     try:

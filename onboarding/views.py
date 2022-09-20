@@ -66,7 +66,7 @@ def index(request):
     return redirect("crisis_room")
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingIntroductionView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -77,7 +77,7 @@ class OnboardingIntroductionView(
     current_step = 1
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingChooseReportInfoView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -88,7 +88,7 @@ class OnboardingChooseReportInfoView(
     current_step = 2
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingChooseReportTypeView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -99,7 +99,7 @@ class OnboardingChooseReportTypeView(
     current_step = 2
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingSetupScanSelectPluginsView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -154,7 +154,7 @@ class OnboardingSetupScanSelectPluginsView(
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingSetupScanOOIInfoView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -185,7 +185,7 @@ class OnboardingOOIForm(OOIForm):
         return self.generate_form_fields(self.hidden_ooi_fields)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingSetupScanOOIAddView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -251,7 +251,7 @@ class OnboardingSetupScanOOIAddView(
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingSetupScanOOIDetailView(
     RedTeamUserRequiredMixin,
     SingleOOITreeMixin,
@@ -301,7 +301,7 @@ class OnboardingSetupScanOOIDetailView(
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingSetClearanceLevelView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -353,7 +353,7 @@ class OnboardingSetClearanceLevelView(
         return tiles
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingReportView(
     RedTeamUserRequiredMixin,
     KatIntroductionStepsMixin,
@@ -401,7 +401,7 @@ class BaseReportView(RedTeamUserRequiredMixin, BaseOOIDetailView):
         return context
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class DnsReportView(OnboardingBreadcrumbsMixin, BaseReportView):
     template_name = "dns_report.html"
     report = DNSReport
@@ -434,7 +434,7 @@ class RegistrationBreadcrumbsMixin(BreadcrumbsMixin):
 
 
 # account flow
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingIntroductionRegistrationView(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView
 ):
@@ -475,7 +475,7 @@ class OrganizationSessionMixin:
         messages.add_message(self.request, messages.SUCCESS, success_message)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingOrganizationSetupView(
     SuperOrAdminUserRequiredMixin,
     OrganizationSessionMixin,
@@ -522,7 +522,7 @@ class OnboardingOrganizationSetupView(
         messages.add_message(self.request, messages.INFO, message)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingOrganizationUpdateView(
     SuperOrAdminUserRequiredMixin,
     OrganizationSessionMixin,
@@ -544,13 +544,13 @@ class OnboardingOrganizationUpdateView(
         messages.add_message(self.request, messages.SUCCESS, success_message)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingChooseUserTypeView(KatIntroductionAdminStepsMixin, TemplateView):
     current_step = 3
     template_name = "account/step_2a_account_user_type.html"
 
 
-@otp_required
+@otp_required(if_configured=True)
 def make_superuser_redteamer(request):
     if request.user.is_superuser:
         redteam_group = Group.objects.get(name="redteam")
@@ -558,7 +558,7 @@ def make_superuser_redteamer(request):
         return redirect(reverse("step_introduction"))
 
 
-@otp_required
+@otp_required(if_configured=True)
 def skip_onboarding(request):
     member = OrganizationMember.objects.get(user=request.user)
     member.onboarded = True
@@ -566,7 +566,7 @@ def skip_onboarding(request):
     return redirect(reverse("crisis_room"))
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingAccountSetupIntroView(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, TemplateView
 ):
@@ -574,7 +574,7 @@ class OnboardingAccountSetupIntroView(
     current_step = 3
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingAccountCreationMixin(
     SuperOrAdminUserRequiredMixin, KatIntroductionAdminStepsMixin, CreateView
 ):
@@ -613,7 +613,7 @@ class OnboardingAccountCreationMixin(
         messages.add_message(self.request, messages.INFO, info_message)
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingAccountSetupAdminView(
     RegistrationBreadcrumbsMixin,
     OnboardingAccountCreationMixin,
@@ -630,7 +630,7 @@ class OnboardingAccountSetupAdminView(
         return reverse_lazy("step_account_setup_red_teamer")
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingAccountSetupRedTeamerView(
     RegistrationBreadcrumbsMixin,
     OnboardingAccountCreationMixin,
@@ -648,7 +648,7 @@ class OnboardingAccountSetupRedTeamerView(
         return reverse_lazy("step_account_setup_client")
 
 
-@class_view_decorator(otp_required)
+@class_view_decorator(otp_required(if_configured=True))
 class OnboardingAccountSetupClientView(
     RegistrationBreadcrumbsMixin, OnboardingAccountCreationMixin
 ):
