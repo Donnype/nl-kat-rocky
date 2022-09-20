@@ -1,6 +1,3 @@
-[submodule "bytes"]
-	path = bytes
-	url = git@github.com:Donnype/nl-kat-bytes.git
 [submodule "boefjes"]
 	path = boefjes
 	url = git@github.com:Donnype/nl-kat-boefjes.git
