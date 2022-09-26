@@ -8,7 +8,7 @@ from octopoes.models import OOI
 from octopoes.models.types import type_by_name
 from pydantic import BaseModel
 
-from katalogus.dependencies.plugins import get_plugin_service
+from boefjes.katalogus.dependencies.plugins import get_plugin_service
 
 from rocky.health import ServiceHealth
 from rocky.settings import KATALOGUS_API

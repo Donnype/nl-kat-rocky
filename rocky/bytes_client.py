@@ -2,7 +2,7 @@ from typing import Dict
 
 import requests
 
-from boefjes.bytes_client import BytesAPIClient as BytesClient
+from boefjes.clients.bytes_client import BytesAPIClient as BytesClient
 from rocky.health import ServiceHealth
 from rocky.settings import BYTES_API, BYTES_USERNAME, BYTES_PASSWORD
 
