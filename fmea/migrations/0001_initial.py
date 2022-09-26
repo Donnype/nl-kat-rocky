@@ -15,14 +15,80 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FailureMode',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('failure_mode', models.CharField(max_length=256, unique=True)),
-                ('description', models.CharField(blank=True, max_length=256)),
-                ('frequency_level', models.PositiveSmallIntegerField(choices=[('', '--- Select an option ----'), (1, 'Level 1: Very Rare. Incident (almost) never occurs, almost unthinkable.'), (2, 'Level 2: Rare. Incidents occur less than once a year (3-5).'), (3, 'Level 3: Occurs. Incidents occur several times a year.'), (4, 'Level 4: Regularly. Incidents occur weekly.'), (5, 'Level 5: Frequent. Incidents occur daily.')])),
-                ('detectability_level', models.PositiveSmallIntegerField(choices=[('', '--- Select an option ----'), (1, 'Level 1: Always Detectable. Incident (almost) never occurs, almost unthinkable.'), (2, 'Level 2: Usually Detectable. Incidents occur less than once a year (3-5).'), (3, 'Level 3: Detectable. Faillure mode is detectable with effort.'), (4, 'Level 4: Poorly Detectable. Detecting the faillure mode is difficult.'), (5, 'Level 5: Almost Undetectable. Faillure mode detection is very difficult or nearly impossible.')])),
-                ('risk_priority_number', models.PositiveSmallIntegerField(default=0)),
-                ('critical_score', models.PositiveSmallIntegerField(default=0)),
-                ('risk_class', models.CharField(blank=True, max_length=50, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("failure_mode", models.CharField(max_length=256)),
+                (
+                    "severity_level",
+                    models.PositiveSmallIntegerField(
+                        choices=[
+                            ("", "--- Select an option ----"),
+                            (1, "1. Not Severe"),
+                            (2, "2. Harmful"),
+                            (3, "3. Severe"),
+                            (4, "4. Very Harmful"),
+                            (5, "5. Catastrophic"),
+                        ]
+                    ),
+                ),
+                (
+                    "frequency_level",
+                    models.PositiveSmallIntegerField(
+                        choices=[
+                            ("", "--- Select an option ----"),
+                            (
+                                1,
+                                "1. Very Rare. Incident (almost) never occurs, almost unthinkable.",
+                            ),
+                            (
+                                2,
+                                "2. Rare. Incidents occur less than once a year (3-5).",
+                            ),
+                            (3, "3. Occurs. Incidents occur several times a year."),
+                            (4, "4. Regularly. Incidents occur weekly."),
+                            (5, "5. Frequent. Incidents occur daily."),
+                        ]
+                    ),
+                ),
+                (
+                    "detectability_level",
+                    models.PositiveSmallIntegerField(
+                        choices=[
+                            ("", "--- Select an option ----"),
+                            (
+                                1,
+                                "1. Always Detectable. Incident (almost) never occurs, almost unthinkable.",
+                            ),
+                            (
+                                2,
+                                "2. Usually Detectable. Incidents occur less than once a year (3-5).",
+                            ),
+                            (
+                                3,
+                                "3. Detectable. Faillure mode is detectable with effort.",
+                            ),
+                            (
+                                4,
+                                "4. Poorly Detectable. Detecting the faillure mode is difficult.",
+                            ),
+                            (
+                                5,
+                                "5. Almost Undetectable. "
+                                "Failure mode detection is very difficult or nearly impossible.",
+                            ),
+                        ]
+                    ),
+                ),
+                ("risk_class", models.CharField(blank=True, max_length=50, null=True)),
+                ("effect", models.CharField(blank=True, max_length=256)),
+                ("description", models.CharField(blank=True, max_length=256)),
             ],
             options={
                 'verbose_name_plural': 'Failure modes',

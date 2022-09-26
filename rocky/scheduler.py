@@ -1,9 +1,10 @@
 import datetime
 from enum import Enum
 from typing import List, Optional, Any, Dict, Set, Union
-
 import requests
 from pydantic import BaseModel, Field
+from rocky.health import ServiceHealth
+from rocky.settings import SCHEDULER_API
 
 from tools.apps import scheduler_app
 
@@ -143,9 +144,16 @@ class SchedulerClientV1:
         self.session = requests.Session()
         self._base_uri = base_uri
 
-    def list_tasks(self, queue_name: str) -> PaginatedTasksResponse:
-        res = self.session.get(f"{self._base_uri}/schedulers/{queue_name}/tasks")
+    def list_tasks(self, queue_name: str, limit: int) -> PaginatedTasksResponse:
+        params = {"limit": limit}
+        res = self.session.get(
+            f"{self._base_uri}/schedulers/{queue_name}/tasks", params=params
+        )
         return PaginatedTasksResponse.parse_raw(res.text)
+
+    def get_task_details(self, task_id):
+        res = self.session.get(f"{self._base_uri}/tasks/{task_id}")
+        return res.json()
 
     def push_task(
         self, queue_name: str, prioritized_item: QueuePrioritizedItem
@@ -154,3 +162,10 @@ class SchedulerClientV1:
             f"{self._base_uri}/queues/{queue_name}/push", data=prioritized_item.json()
         )
         res.raise_for_status()
+
+    def health(self) -> ServiceHealth:
+        health_endpoint = self.session.get(f"{self._base_uri}/health")
+        return ServiceHealth.parse_raw(health_endpoint.content)
+
+
+client = SchedulerClient(SCHEDULER_API)
