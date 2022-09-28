@@ -138,6 +138,12 @@ class SchedulerClient:
 
         return models.QueuePrioritizedItem(**p_item.dict())
 
+    def get_task_details(self, task_id):
+        task = self.ctx.datastore.get_task_by_id(task_id)
+
+        if task:
+            return task.dict()
+
 
 class SchedulerClientV1:
     def __init__(self, base_uri: str):

@@ -7,8 +7,7 @@ from django.apps import AppConfig
 
 from boefjes.tasks import handle_boefje, handle_normalizer
 from scheduler import App, context
-from scheduler.dispatchers.dispatcher import TASKS
-
+from scheduler.models import BoefjeTask, NormalizerTask
 
 logger = logging.getLogger(__name__)
 scheduler_app = App(context.AppContext())
@@ -16,24 +15,18 @@ scheduler_app = App(context.AppContext())
 
 def boefjes_task_listener():
     while True:
-        for queue_name, queue_tasks in TASKS.items():
-            if not queue_tasks:
+        for scheduler in scheduler_app.schedulers.values():
+            if scheduler.queue.empty():
                 continue
 
-            for task_name, tasks in queue_tasks.items():
-                if not tasks:
-                    continue
+            p_item = scheduler.queue.pop()
+            logger.info(f"Handling task: {p_item}")
 
-                task = tasks.pop(0)
-                logger.info(f"Handling task: {task}")
+            if isinstance(p_item.item, BoefjeTask):
+                Thread(target=handle_boefje, args=(p_item.item.dict(),)).start()
 
-                if "boefje" in queue_name:
-                    process = Thread(target=handle_boefje, args=(task,))
-                    process.start()
-
-                if "normalizer" in queue_name:
-                    process = Thread(target=handle_normalizer, args=(task,))
-                    process.start()
+            if isinstance(p_item.item, NormalizerTask):
+                Thread(target=handle_normalizer, args=(p_item.item.dict(),)).start()
 
         time.sleep(1)
 
