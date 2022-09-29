@@ -19,7 +19,7 @@ sys.path.append(str(path.parent / "boefjes"))
 def start(
     plugin_dir: str = "plugins",
 ):
-    from boefjes.models import BOEFJES_DIR
+    from boefjes.plugins.models import BOEFJES_DIR
 
     plugin_dir = Path() / plugin_dir
 
@@ -30,7 +30,7 @@ def start(
             if not plugin.is_dir:
                 continue
 
-            target = BOEFJES_DIR / ("_local_" + plugin.name)
+            target = BOEFJES_DIR / plugin.name
 
             if target.exists():
                 shutil.rmtree(target)
