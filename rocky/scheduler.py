@@ -1,4 +1,5 @@
 import datetime
+import json
 from enum import Enum
 from typing import List, Optional, Any, Dict, Set, Union
 import requests
@@ -8,7 +9,6 @@ from rocky.settings import SCHEDULER_API
 
 from tools.apps import scheduler_app
 
-import scheduler
 from scheduler import context, models, queues, schedulers
 from scheduler.server.pagination import PaginatedResponse, paginate
 
@@ -142,7 +142,7 @@ class SchedulerClient:
         task = self.ctx.datastore.get_task_by_id(task_id)
 
         if task:
-            return task.dict()
+            return json.loads(task.json())
 
 
 class SchedulerClientV1:
